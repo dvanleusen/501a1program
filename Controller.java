@@ -24,10 +24,10 @@ public class Controller {
 	 * @param	dice		The die to be used in the game
 	 */
 
-	public Controller(int computerScore, int base, char mode, int seed) {
-		controlCpu = new ComputerPlayer(computerScore);
-		controlHuman = new HumanPlayer(base, mode);
-		controlDice = new Dice(seed);
+	public Controller(ComputerPlayer cpuPlayer, HumanPlayer userPlayer, Dice dice) {
+		controlCpu = cpuPlayer;
+		controlHuman = userPlayer;
+		controlDice = dice;
 	}
 	
 	/**
@@ -47,7 +47,8 @@ public class Controller {
 		int round = 1;
 
 		// checks if any player's score is over 100
-		while (controlCpu.getComputerScore() < totalPoint && controlHuman.getHumanScore() < totalPoint)	{
+		while (controlCpu.getComputerScore() < totalPoint && controlHuman.getHumanScore() < totalPoint)
+		{
 			System.out.println("\n[" + round + "]" + "ComputerScore = " + controlCpu.getComputerScore() +
 			"  HumanScore = " + controlHuman.getHumanScore());
 			int points = 0;
@@ -55,29 +56,35 @@ public class Controller {
 			boolean blnFirstHand = true;
 
 			// human player always goes first and checks if it is human's turn
-			if (blnHumanPlayer)	{
+			if (blnHumanPlayer)
+			{
 				intTotalScore = controlHuman.getHumanScore();
 				// checks again if it is human's turn at each roll, and see if the new score exceeds 100
-				while (blnHumanPlayer &&  intTotalScore < totalPoint) {
+				while (blnHumanPlayer &&  intTotalScore < totalPoint)
+				{
 					// checks if it is the first hand of the round: the first hand does not let player
 					// choose to roll or to hold
-					if (blnFirstHand || controlHuman.human(points) == 'r') {
+					if (blnFirstHand || controlHuman.human(points) == 'r')
+					{
 						int intCurrentRoll = controlDice.roll();
 						points += intCurrentRoll;
 						System.out.println("     H: dice = " + intCurrentRoll + " points = " + points);
 						// if rolls 1, no new score is gained by the player and your opponent starts rolling
-						if (intCurrentRoll == 1) {
+						if (intCurrentRoll == 1)
+						{
 							blnHumanPlayer = false;
 							points = 0;
 						}
 
-						else {
+						else
+						{
 							
 							intTotalScore += intCurrentRoll;
 						}
 					}
 
-					else {
+					else
+					{
 						blnHumanPlayer = false;
 					}
 					blnFirstHand = false;
@@ -87,24 +94,30 @@ public class Controller {
 			}
 
 			// a similar logic is applied to computer player, please see above comments
-			else {
+			else
+			{
 				intTotalScore = controlCpu.getComputerScore();
-				while (!blnHumanPlayer &&  intTotalScore < totalPoint) {
-					if (blnFirstHand || controlCpu.computer(controlCpu.getComputerScore(), controlHuman.getHumanScore(), points) == 'r') {
+				while (!blnHumanPlayer &&  intTotalScore < totalPoint)
+				{
+					if (blnFirstHand || controlCpu.computer(controlCpu.getComputerScore(), controlHuman.getHumanScore(), points) == 'r')
+					{
 						int intCurrentRoll = controlDice.roll();
 						points += intCurrentRoll;
 						System.out.println("     C: dice = " + intCurrentRoll + " points = " + points);
-						if (intCurrentRoll == 1) {
+						if (intCurrentRoll == 1)
+						{
 							blnHumanPlayer = true;
 							points = 0;
 						}
 
-						else {
+						else
+						{
 							intTotalScore += intCurrentRoll;
 						}
 					}
 
-					else {
+					else
+					{
 						blnHumanPlayer = true;
 					}
 					blnFirstHand=false;
@@ -116,16 +129,18 @@ public class Controller {
 		}
 
 		// checks if human wins
-		if (controlCpu.getComputerScore() <  controlHuman.getHumanScore()) {
+		if (controlCpu.getComputerScore() <  controlHuman.getHumanScore())
+		{
 			System.out.println("\nGame is over, human player wins with the score " + controlHuman.getHumanScore() + "!!"); 
 
 		}
 		// checks if the game is a draw
-		else if(controlCpu.getComputerScore() ==  controlHuman.getHumanScore()) {
+		else if(controlCpu.getComputerScore() ==  controlHuman.getHumanScore())
+		{
 			System.out.println("\nGame is over, it is a draw with a score " + controlHuman.getHumanScore() + "!!"); 
 		}
 		// checks if computer wins
-		else {
+		else{
 			System.out.println("\nGame is over, computer player wins with the score " + controlCpu.getComputerScore() + "!!"); 
 		}
 	}

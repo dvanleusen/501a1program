@@ -17,8 +17,8 @@ public class ComputerPlayer {
 	/**
 	 * Constructor for creating a computer player.
 	 */
-	public ComputerPlayer(int cpuScore) {
-		computerScore =cpuScore;
+	public ComputerPlayer() {
+		computerScore = 0;
 	}
 
 	/**
@@ -38,7 +38,6 @@ public class ComputerPlayer {
 		computerScore = newComputerScore;
 	}
 
-	
 	/**
 	 * The method play() is called by the Controller after each die roll.
 	 * The scores do not change in the middle of a turn.
@@ -53,17 +52,20 @@ public class ComputerPlayer {
 
 		char compDecision = ' ';
 		// checks if either player's score is over 71, if yes, it will roll
-		if (humanScore >= 71 || computerScore >= 71) {
+		if (humanScore >= 71 || computerScore >= 71)
+		{
 			compDecision = 'r';
 		}
 		// otherwise it will determine the base value and roll until it is achieved
-		else {
+		else
+		{
 			int baseComputer = (int) 21+ Math.round((computerScore - humanScore)/8);
-			if (points < baseComputer) {
+			if (points < baseComputer)
+			{
 				compDecision = 'r';
 			}
-			
-			else {
+			else
+			{
 				compDecision = 'h';
 			}
 		}

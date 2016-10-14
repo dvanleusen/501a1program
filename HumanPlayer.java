@@ -20,9 +20,16 @@ public class HumanPlayer {
 	private int humanScore = 0;
 	private int baseHuman = -1;
 
+	/**
+	 * Constructor for creating an interactive human player.
+	 */
+	public HumanPlayer()
+	{
+		humanScore = 0;
+	}
 
 	/**
-	 * An acceessor to access the human score
+	 * An accessor to access the human score
 	 *
 	 * @return	returns the current human score
 	 */
@@ -49,22 +56,8 @@ public class HumanPlayer {
 	{
 		baseHuman = base;
 	}
-
-	/**
-	 * Constructor for creating an interactive human player.
-	 */
-	public HumanPlayer(int base, char mode) {
-
-		if (mode == 'i') {
-			humanScore = 0;
-		}
-
-		else {
-			baseHuman = base;
-		}
-	}
-
 	
+
 	/**
 	 * The method play() is called by the Controller after each die roll.
 	 * The scores do not change in the middle of a turn.
@@ -73,24 +66,31 @@ public class HumanPlayer {
 	 * @param	points			the sum of rolls collected so far in this turn
 	 * @return	the next move of the player as a character: Roll or Hold	
 	 */
-	public char human(int points) {
+	public char human(int points)
+	{
 		char humanDecision = ' ';
 
-		if (baseHuman == -1) {
+		if (baseHuman == -1)
+		{
 			Scanner keyboard = new Scanner(System.in);
 			// prompts user to choose hold or roll
-			while (humanDecision != 'h' && humanDecision != 'r') {
+			while (humanDecision != 'h' && humanDecision != 'r')
+			{
 				System.out.print("     H: (r)un or (h)old? ");
 				humanDecision = keyboard.next().charAt(0);
 			}
+
 		}
 		// automated mode: roll until the user entered hold base value is achieved
-		else {
-			if (points < baseHuman)	{
+		else
+		{
+			if (points < baseHuman)
+			{
 				humanDecision = 'r';
 			}
 
-			else {
+			else
+			{
 				humanDecision = 'h';
 			}
 		}
