@@ -15,7 +15,10 @@ public class Controller {
 	ComputerPlayer controlCpu;
 	HumanPlayer controlHuman;
 	Dice controlDice;
-
+	boolean blnHumanPlayer = false;
+	boolean blnFirstHand = false;
+	int intTotalScore = 0;
+	int points = 0;
 	/**
 	 * A constructor for the controller that declares class variables
 	 * 
@@ -28,6 +31,38 @@ public class Controller {
 		controlCpu = cpuPlayer;
 		controlHuman = userPlayer;
 		controlDice = dice;
+	}
+	
+	private void roundControl(){
+		// checks if it is the first hand of the round: the first hand does not let player
+		// choose to roll or to hold
+		if (blnFirstHand || (blnHumanPlayer && controlHuman.human(points) == 'r')|| (!blnHumanPlayer && controlCpu.computer(controlCpu.getComputerScore(), controlHuman.getHumanScore(), points) == 'r'))
+		{
+			int intCurrentRoll = controlDice.roll();
+			points += intCurrentRoll;
+			if (blnHumanPlayer)
+				System.out.println("     H: dice = " + intCurrentRoll + " points = " + points);
+			else 
+				System.out.println("     C: dice = " + intCurrentRoll + " points = " + points);
+			// if rolls 1, no new score is gained by the player and your opponent starts rolling
+			if (intCurrentRoll == 1)
+			{
+				blnHumanPlayer = !blnHumanPlayer;
+				points = 0;
+			}
+
+			else
+			{
+				
+				intTotalScore += intCurrentRoll;
+			}
+		}
+
+		else
+		{
+			blnHumanPlayer = !blnHumanPlayer;
+		}
+		blnFirstHand = false;
 	}
 	
 	/**
@@ -43,7 +78,7 @@ public class Controller {
 		// a player wins when its score reaches 100
 		// ...
 		int totalPoint = 100;
-		boolean blnHumanPlayer = true;
+		blnHumanPlayer = true;
 		int round = 1;
 
 		// checks if any player's score is over 100
@@ -51,43 +86,20 @@ public class Controller {
 		{
 			System.out.println("\n[" + round + "]" + "ComputerScore = " + controlCpu.getComputerScore() +
 			"  HumanScore = " + controlHuman.getHumanScore());
-			int points = 0;
-			int intTotalScore = 0;
-			boolean blnFirstHand = true;
-
+			points = 0;
+			intTotalScore = 0;
+			blnFirstHand = true;
+			intTotalScore = blnHumanPlayer?controlHuman.getHumanScore():controlCpu.getComputerScore();
 			// human player always goes first and checks if it is human's turn
+		
 			if (blnHumanPlayer)
 			{
-				intTotalScore = controlHuman.getHumanScore();
-				// checks again if it is human's turn at each roll, and see if the new score exceeds 100
+			// checks again if it is human's turn at each roll, and see if the new score exceeds 100
 				while (blnHumanPlayer &&  intTotalScore < totalPoint)
 				{
 					// checks if it is the first hand of the round: the first hand does not let player
 					// choose to roll or to hold
-					if (blnFirstHand || controlHuman.human(points) == 'r')
-					{
-						int intCurrentRoll = controlDice.roll();
-						points += intCurrentRoll;
-						System.out.println("     H: dice = " + intCurrentRoll + " points = " + points);
-						// if rolls 1, no new score is gained by the player and your opponent starts rolling
-						if (intCurrentRoll == 1)
-						{
-							blnHumanPlayer = false;
-							points = 0;
-						}
-
-						else
-						{
-							
-							intTotalScore += intCurrentRoll;
-						}
-					}
-
-					else
-					{
-						blnHumanPlayer = false;
-					}
-					blnFirstHand = false;
+					roundControl();
 				}
 				// records the new human player score
 				controlHuman.setHumanScore(controlHuman.getHumanScore()+points);
@@ -96,31 +108,9 @@ public class Controller {
 			// a similar logic is applied to computer player, please see above comments
 			else
 			{
-				intTotalScore = controlCpu.getComputerScore();
 				while (!blnHumanPlayer &&  intTotalScore < totalPoint)
 				{
-					if (blnFirstHand || controlCpu.computer(controlCpu.getComputerScore(), controlHuman.getHumanScore(), points) == 'r')
-					{
-						int intCurrentRoll = controlDice.roll();
-						points += intCurrentRoll;
-						System.out.println("     C: dice = " + intCurrentRoll + " points = " + points);
-						if (intCurrentRoll == 1)
-						{
-							blnHumanPlayer = true;
-							points = 0;
-						}
-
-						else
-						{
-							intTotalScore += intCurrentRoll;
-						}
-					}
-
-					else
-					{
-						blnHumanPlayer = true;
-					}
-					blnFirstHand=false;
+					roundControl();
 				}
 				controlCpu.setComputerScore(controlCpu.getComputerScore()+points);
 			}
