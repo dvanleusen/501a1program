@@ -17,17 +17,46 @@ import java.util.Scanner;
 
 public class HumanPlayer {
 
-	public Score humanScore;
+	private int humanScore = 0;
 	private int baseHuman = -1;
+
+
+	/**
+	 * An acceessor to access the human score
+	 *
+	 * @return	returns the current human score
+	 */
+	public int getHumanScore()
+	{
+		return humanScore;
+	}
+
+	/**
+	 * A mutator to set new human score
+	 *
+	 */
+	public void setHumanScore(int newHumanScore)
+	{
+		humanScore = newHumanScore;
+	}
+	
+	/**
+	 * Constructor for creating an automated human player.
+	 * 
+	 * @param	base	The value of the base when deciding whether to Roll or Hold.
+	 */
+	public HumanPlayer(int base)
+	{
+		baseHuman = base;
+	}
 
 	/**
 	 * Constructor for creating an interactive human player.
 	 */
 	public HumanPlayer(int base, char mode) {
-		humanScore = new Score();
-		baseHuman = base;
+
 		if (mode == 'i') {
-			humanScore.setScore(0);
+			humanScore = 0;
 		}
 
 		else {

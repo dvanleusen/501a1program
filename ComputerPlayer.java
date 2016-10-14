@@ -12,16 +12,33 @@
 
 public class ComputerPlayer {
 	
-	public Score computerScore;
+	private int computerScore = 0;
 
 	/**
 	 * Constructor for creating a computer player.
 	 */
 	public ComputerPlayer(int cpuScore) {
-		computerScore = new Score();
-		computerScore.setScore(cpuScore);
+		computerScore =cpuScore;
 	}
 
+	/**
+	 * An acceesor to access the computer score
+	 *
+	 * @return	returns the current computer score	
+	 */
+	public int getComputerScore(){
+		return computerScore;
+	}
+
+	/**
+	 * A mutator to set new computer score
+	 *
+	 */
+	public void setComputerScore(int newComputerScore){
+		computerScore = newComputerScore;
+	}
+
+	
 	/**
 	 * The method play() is called by the Controller after each die roll.
 	 * The scores do not change in the middle of a turn.

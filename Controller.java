@@ -47,16 +47,16 @@ public class Controller {
 		int round = 1;
 
 		// checks if any player's score is over 100
-		while (controlCpu.computerScore.getScore() < totalPoint && controlHuman.humanScore.getScore() < totalPoint)	{
-			System.out.println("\n[" + round + "]" + "ComputerScore = " + controlCpu.computerScore.getScore() +
-			"  HumanScore = " + controlHuman.humanScore.getScore());
+		while (controlCpu.getComputerScore() < totalPoint && controlHuman.getHumanScore() < totalPoint)	{
+			System.out.println("\n[" + round + "]" + "ComputerScore = " + controlCpu.getComputerScore() +
+			"  HumanScore = " + controlHuman.getHumanScore());
 			int points = 0;
 			int intTotalScore = 0;
 			boolean blnFirstHand = true;
 
 			// human player always goes first and checks if it is human's turn
 			if (blnHumanPlayer)	{
-				intTotalScore = controlHuman.humanScore.getScore();
+				intTotalScore = controlHuman.getHumanScore();
 				// checks again if it is human's turn at each roll, and see if the new score exceeds 100
 				while (blnHumanPlayer &&  intTotalScore < totalPoint) {
 					// checks if it is the first hand of the round: the first hand does not let player
@@ -83,14 +83,14 @@ public class Controller {
 					blnFirstHand = false;
 				}
 				// records the new human player score
-				controlHuman.humanScore.setScore(controlHuman.humanScore.getScore()+points);
+				controlHuman.setHumanScore(controlHuman.getHumanScore()+points);
 			}
 
 			// a similar logic is applied to computer player, please see above comments
 			else {
-				intTotalScore = controlCpu.computerScore.getScore();
+				intTotalScore = controlCpu.getComputerScore();
 				while (!blnHumanPlayer &&  intTotalScore < totalPoint) {
-					if (blnFirstHand || controlCpu.computer(controlCpu.computerScore.getScore(), controlHuman.humanScore.getScore(), points) == 'r') {
+					if (blnFirstHand || controlCpu.computer(controlCpu.getComputerScore(), controlHuman.getHumanScore(), points) == 'r') {
 						int intCurrentRoll = controlDice.roll();
 						points += intCurrentRoll;
 						System.out.println("     C: dice = " + intCurrentRoll + " points = " + points);
@@ -109,24 +109,24 @@ public class Controller {
 					}
 					blnFirstHand=false;
 				}
-				controlCpu.computerScore.setScore(controlCpu.computerScore.getScore()+points);
+				controlCpu.setComputerScore(controlCpu.getComputerScore()+points);
 			}
 			// counts number of rounds
 			round++;
 		}
 
 		// checks if human wins
-		if (controlCpu.computerScore.getScore() <  controlHuman.humanScore.getScore()) {
-			System.out.println("\nGame is over, human player wins with the score " + controlHuman.humanScore.getScore() + "!!"); 
+		if (controlCpu.getComputerScore() <  controlHuman.getHumanScore()) {
+			System.out.println("\nGame is over, human player wins with the score " + controlHuman.getHumanScore() + "!!"); 
 
 		}
 		// checks if the game is a draw
-		else if(controlCpu.computerScore.getScore() ==  controlHuman.humanScore.getScore()) {
-			System.out.println("\nGame is over, it is a draw with a score " + controlHuman.humanScore.getScore() + "!!"); 
+		else if(controlCpu.getComputerScore() ==  controlHuman.getHumanScore()) {
+			System.out.println("\nGame is over, it is a draw with a score " + controlHuman.getHumanScore() + "!!"); 
 		}
 		// checks if computer wins
 		else {
-			System.out.println("\nGame is over, computer player wins with the score " + controlCpu.computerScore.getScore() + "!!"); 
+			System.out.println("\nGame is over, computer player wins with the score " + controlCpu.getComputerScore() + "!!"); 
 		}
 	}
 }
