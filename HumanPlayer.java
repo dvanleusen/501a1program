@@ -12,7 +12,7 @@ import java.util.Scanner;
 * The method "play" is called by the Controller
 * 
 * @author Daniel Van Leusen
-* @version Feb 23, 2015
+* @version October 14, 2016
 */
 
 public class HumanPlayer {
@@ -23,8 +23,7 @@ public class HumanPlayer {
 	/**
 	 * Constructor for creating an interactive human player.
 	 */
-	public HumanPlayer()
-	{
+	public HumanPlayer() {
 		humanScore = 0;
 	}
 
@@ -33,8 +32,7 @@ public class HumanPlayer {
 	 *
 	 * @return	returns the current human score
 	 */
-	public int getHumanScore()
-	{
+	public int getHumanScore() {
 		return humanScore;
 	}
 
@@ -42,8 +40,7 @@ public class HumanPlayer {
 	 * A mutator to set new human score
 	 *
 	 */
-	public void setHumanScore(int newHumanScore)
-	{
+	public void setHumanScore(int newHumanScore) {
 		humanScore = newHumanScore;
 	}
 	
@@ -52,8 +49,7 @@ public class HumanPlayer {
 	 * 
 	 * @param	base	The value of the base when deciding whether to Roll or Hold.
 	 */
-	public HumanPlayer(int base)
-	{
+	public HumanPlayer(int base) {
 		baseHuman = base;
 	}
 	
@@ -66,31 +62,24 @@ public class HumanPlayer {
 	 * @param	points			the sum of rolls collected so far in this turn
 	 * @return	the next move of the player as a character: Roll or Hold	
 	 */
-	public char human(int points)
-	{
+	public char humanMove(int points) {
 		char humanDecision = ' ';
 
-		if (baseHuman == -1)
-		{
+		if (baseHuman == -1) {
 			Scanner keyboard = new Scanner(System.in);
 			// prompts user to choose hold or roll
-			while (humanDecision != 'h' && humanDecision != 'r')
-			{
+			while (humanDecision != 'h' && humanDecision != 'r') {
 				System.out.print("     H: (r)un or (h)old? ");
 				humanDecision = keyboard.next().charAt(0);
 			}
-
 		}
+		
 		// automated mode: roll until the user entered hold base value is achieved
-		else
-		{
+		else {
 			if (points < baseHuman)
-			{
 				humanDecision = 'r';
-			}
 
-			else
-			{
+			else {
 				humanDecision = 'h';
 			}
 		}

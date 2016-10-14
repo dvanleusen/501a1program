@@ -7,7 +7,7 @@
 * but it determines the base value for Hold on its own.
 * <p>
 * @author Daniel Van Leusen
-* @version Feb 23, 2015
+* @version October 14, 2016
 */
 
 public class ComputerPlayer {
@@ -26,7 +26,7 @@ public class ComputerPlayer {
 	 *
 	 * @return	returns the current computer score	
 	 */
-	public int getComputerScore(){
+	public int getComputerScore() {
 		return computerScore;
 	}
 
@@ -34,7 +34,7 @@ public class ComputerPlayer {
 	 * A mutator to set new computer score
 	 *
 	 */
-	public void setComputerScore(int newComputerScore){
+	public void setComputerScore(int newComputerScore) {
 		computerScore = newComputerScore;
 	}
 
@@ -48,24 +48,19 @@ public class ComputerPlayer {
 	 * @param	points			the sum of rolls collected so far in this turn
 	 * @return	the next move of the player as a character: Roll or Hold	
 	 */
-	public char computer(int computerScore, int humanScore, int points) {
+	public char computerMove(int computerScore, int humanScore, int points) {
 
 		char compDecision = ' ';
 		// checks if either player's score is over 71, if yes, it will roll
 		if (humanScore >= 71 || computerScore >= 71)
-		{
 			compDecision = 'r';
-		}
 		// otherwise it will determine the base value and roll until it is achieved
-		else
-		{
+		else {
 			int baseComputer = (int) 21+ Math.round((computerScore - humanScore)/8);
-			if (points < baseComputer)
-			{
+			if (points < baseComputer) {
 				compDecision = 'r';
 			}
-			else
-			{
+			else {
 				compDecision = 'h';
 			}
 		}

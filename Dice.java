@@ -8,8 +8,8 @@ import java.util.Random;
  * when calling the constructor. Internally, class Dice uses
  * the Java class Rnadom.
  * 
- * @author Majid Ghaderi
- * @since Feb 5, 2015
+ * @author Daniel Van Leusen
+ * @since October 14, 2016
  */
 public class Dice {
 	private Random random;	// the internal Java Random object

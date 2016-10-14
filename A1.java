@@ -1,11 +1,11 @@
 import java.util.Scanner;
 
 /**
-* Assignment 2
+* Assignment 1
 * @author Daniel Van Leusen
 * Student id: 10064708
 * E-mail: danvanleusen@yahoo.co.uk
-* @version Feb 23, 2015
+* @version October 14, 2016
 * <p>
 * This is a game of Pig, which is a simple two-player dice game and the first player to reach 100
 * or more points wins. This program does the following:
@@ -24,50 +24,41 @@ import java.util.Scanner;
 * also is designed to be computer vs. human , and human vs. human matches are not supported yet. 
 */
 
-public class A2 {
+public class A1 {
 
 	//initializes and declares constants that will be used to check seed
 	public static final int ASCII_ZERO = 48;
 	public static final int ASCII_NINE = 57;
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		// integer variable seed is declared and initialized to 0
 		int seed = 0;
 
 		// checks if user enters an invalid command line argument that contains characters other than integers
 		// if there is any illegal character, an error message will display and the program will be terminated
-		for (int lngArgsLength = 0; lngArgsLength < args.length; lngArgsLength++)
-		{
+		for (int lngArgsLength = 0; lngArgsLength < args.length; lngArgsLength++) {
 			int argLength = args[lngArgsLength].length();
-			for (int index = 0; index < argLength; index++)
-			{
+			for (int index = 0; index < argLength; index++)	{
 				int asciiDig = (int) args[0].charAt(index);
-				if ((asciiDig < ASCII_ZERO) || (asciiDig > ASCII_NINE))
-				{
+				if ((asciiDig < ASCII_ZERO) || (asciiDig > ASCII_NINE))	{
 					System.out.println("The seed argument has to be an integer number.");
 					System.exit(0);	
 				}
-			}
-			
+			}	
 		}
 
 		// if user does not enter any command line argument, seed value is defaulted to be 1234
 		if (args.length == 0)
-		{
 			seed = 1234;
-		}
 
 		// if user enters a valid command line argument, the entered value will be the new seed value
-		else if (args.length == 1)
-		{
+		else if (args.length == 1) {
 			seed = Integer.parseInt(args[0]);
 			System.out.println("Using the seed "+args[0]+".");
 		}
 
 		// if user enters more than one argument, an error message will display and the program will exit
-		else
-		{
+		else {
 			System.out.println("Usage: java Game <seed>");
 			System.exit(0);
 		}
@@ -81,19 +72,16 @@ public class A2 {
 		char mode = ' ';
 		Scanner keyboard = new Scanner (System.in);
 		
-		while (mode!='i' && mode!='a')
-		{
+		while (mode!='i' && mode!='a') {
 			System.out.println("\nYou can play this game in interactive or automated mode. \nEnter 'i' for interactive or 'a' for automated mode:");
 			mode = keyboard.next().charAt(0);
 		}
 
-		if (mode == 'i')
-		{
+		if (mode == 'i') {
 			humanPlayer = new HumanPlayer();
 		}
 
-		else
-		{
+		else {
 			System.out.print("Enter an integer value for the base: ");
 			int base = keyboard.nextInt();
 			humanPlayer = new HumanPlayer(base);
@@ -104,5 +92,4 @@ public class A2 {
 		Controller controller = new Controller(new ComputerPlayer(), humanPlayer, new Dice(seed));
 		controller.start();
 	}
-
 }
